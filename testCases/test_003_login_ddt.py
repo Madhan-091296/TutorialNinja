@@ -7,6 +7,7 @@ from utilities import XLUtils
 from utilities.readProperties import ReadConfig
 from utilities.customLogger import LogGen
 import os
+import datetime
 @pytest.mark.smoke
 class Test_Login_DDT():
    baseURL = ReadConfig.getApplicationURL()
