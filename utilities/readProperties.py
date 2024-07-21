@@ -1,7 +1,7 @@
 import configparser
 import os
 config = configparser.RawConfigParser()
-config.read(os.path.abspath(os.getcwd())+'\\TutorialNinja\\configurations\\config.ini')
+config.read(os.path.abspath(os.getcwd())+'\\configurations\\config.ini')
 class ReadConfig():
     @staticmethod
     def getApplicationURL():
@@ -17,3 +17,4 @@ class ReadConfig():
     def getPassword():
         password = (config.get('commonInfo', 'password'))
         return password
+# print(os.path.dirname(os.getcwd())+'\\TutorialNinja\\configurations\\config.ini')
