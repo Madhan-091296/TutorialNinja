@@ -17,4 +17,4 @@ class ReadConfig():
     def getPassword():
         password = (config.get('commonInfo', 'password'))
         return password
-# print(os.path.dirname(os.getcwd())+'\\TutorialNinja\\configurations\\config.ini')
+# print(os.path.abspath(os.getcwd()))
