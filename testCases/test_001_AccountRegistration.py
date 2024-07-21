@@ -27,10 +27,10 @@ class Test_001_AccountReg:
         self.regpage = AccountRegistrationPage(self.driver)
         self.regpage.setFirstName("John")
         self.regpage.setLastName("Canedy")
-        # self.email = randomString.random_string_generator()+"@gmail.com"
+        self.email = randomString.random_string_generator()+"@gmail.com"
         # self.regpage.setEmail('suma@gmail.com')
-        self.regpage.setEmail(ReadConfig.getUseremail())
-        # self.regpage.setEmail(self.email)
+        # self.regpage.setEmail(ReadConfig.getUseremail())
+        self.regpage.setEmail(self.email)
         self.regpage.setTelephone("65656565")
         self.regpage.setPassword(ReadConfig.getPassword())
         self.regpage.setConfirmPassword(ReadConfig.getPassword())
