@@ -1,0 +1,1 @@
+pytest -s -v -m "sanity" --reruns 2 --reruns-delay 2 --alluredir=reports\allure-results -n 2 testCases\ --browser edge && allure generate reports\allure-results -o reports\allure-html --clean && allure open reports\allure-html
