@@ -1,22 +1,17 @@
 // pipeline {
 //     agent any
-// //   triggers {
-// //         // Uncomment if you want scheduled runs (e.g., every day at 7 AM)
-// //         // cron('H 7 * * *')
-// //
-// //         // Uncomment if you want auto-trigger on Git changes
-// //         pollSCM('* * * * *')
-// //     }
+//
 //     parameters {
 //         choice(name: 'BROWSER', choices: ['edge', 'chrome', 'firefox'], description: 'Browser name')
 //         choice(name: 'MARKER', choices: ['smoke', 'all', 'sanity'], description: 'Test group')
-//         choice(name: 'PARALLEL', choices: ['1','2','3'], description: 'Threads')
+//         choice(name: 'PARALLEL', choices: ['1', '2', '3'], description: 'Threads')
 //     }
 //
 //     environment {
 //         REPORT_DIR = "reports"
 //         ALLURE_RESULTS = "${REPORT_DIR}\\allure-results"
 //         ALLURE_HTML = "${REPORT_DIR}\\allure-html"
+//         PYTEST_HTML = "${REPORT_DIR}\\pytest-report.html"
 //     }
 //
 //     stages {
@@ -38,6 +33,15 @@
 //                 echo "Cleaning previous reports..."
 //                 bat "rmdir /s /q %ALLURE_RESULTS% || exit 0"
 //                 bat "rmdir /s /q %ALLURE_HTML% || exit 0"
+//                 bat "del %PYTEST_HTML% || exit 0"
+//             }
+//         }
+//
+//         stage('Start Selenium Grid') {
+//             steps {
+//                 echo 'Starting Selenium Grid using Docker Compose...'
+//                 bat 'docker-compose down || exit 0'
+//                 bat 'docker-compose up -d'
 //             }
 //         }
 //
@@ -53,7 +57,7 @@
 //                 script {
 //                     def marker = params.MARKER
 //                     def markerOption = marker == 'all' ? '' : "-m ${marker}"
-//                     def testCommand = "call venv\\Scripts\\activate.bat && pytest -s -v ${markerOption} --alluredir=%ALLURE_RESULTS% -n ${params.PARALLEL} testCases\\ --browser ${params.BROWSER}"
+//                     def testCommand = "call venv\\Scripts\\activate.bat && pytest -s -v ${markerOption} --alluredir=%ALLURE_RESULTS% -n ${params.PARALLEL} testCases\\ --browser ${params.BROWSER} --html=%PYTEST_HTML% --self-contained-html"
 //                     echo "Running tests with command: ${testCommand}"
 //                     bat "${testCommand}"
 //                 }
@@ -67,105 +71,128 @@
 //             }
 //         }
 //
+// //         stage('Publish Pytest HTML Report') {
+// //             steps {
+// //                 publishHTML(target: [
+// //                     reportDir: 'reports',
+// //                     reportFiles: 'pytest-report.html',
+// //                     reportName: '✅ Pytest HTML Report',
+// //                     keepAll: true,
+// //                     alwaysLinkToLastBuild: true,
+// //                     allowMissing: false
+// //                 ])
+// //             }
+// //         }
+//
 //         stage('Publish Allure Report in Jenkins') {
 //             steps {
 //                 echo "Publishing Allure report in Jenkins UI..."
 //             }
 //         }
 //
-//         stage('Archive HTML Report') {
+//         stage('Archive Reports') {
 //             steps {
 //                 archiveArtifacts artifacts: "${ALLURE_HTML}/**", fingerprint: true
+//                 archiveArtifacts artifacts: "${PYTEST_HTML}", fingerprint: true
 //             }
 //         }
 //     }
 //
 //     post {
-//     always {
-//         echo "Always publishing Allure results..."
-//         allure includeProperties: false,
-//                jdk: '',
-//                results: [[path: "${env.ALLURE_RESULTS}"]]
+//         always {
+//             echo "Always publishing Allure results..."
+//             allure includeProperties: false,
+//                    jdk: '',
+//                    results: [[path: "${env.ALLURE_RESULTS}"]]
+//
+//             echo "Stopping Selenium Grid..."
+//             bat 'docker-compose down || true'
+//         }
+//
+//         success {
+//             emailext(
+//                 to: 'mmr091296@gmail.com, kmr91296@gmail.com',
+//                 subject: "✅ Jenkins Job: ${env.JOB_NAME} #${env.BUILD_NUMBER} - SUCCESS",
+//                 mimeType: 'text/html',
+//                 body: """
+//                     <p>✅ <strong>Build completed successfully!</strong></p>
+//
+//                     <ul>
+//                         <li><strong>Job:</strong> ${env.JOB_NAME}</li>
+//                         <li><strong>Build:</strong> #${env.BUILD_NUMBER}</li>
+//                         <li><strong>Allure Report:</strong> <a href="${env.BUILD_URL}allure">${env.BUILD_URL}allure</a></li>
+//                         <li><strong>Pytest HTML Report:</strong> Available in archived artifacts.</li>
+//                         <li><strong>Logs:</strong> <a href="${env.BUILD_URL}console">${env.BUILD_URL}console</a></li>
+//                     </ul>
+//
+//                     <p>Regards,<br>Madhan</p>
+//                 """,
+//                 from: "Madhan <mmr091296@gmail.com>"
+//             )
+//         }
+//
+//         failure {
+//             emailext(
+//                 to: 'mmr091296@gmail.com, kmr91296@gmail.com',
+//                 subject: "❌ Jenkins Job: ${env.JOB_NAME} #${env.BUILD_NUMBER} - FAILURE",
+//                 mimeType: 'text/html',
+//                 body: """
+//                     <p>❌ <strong>Build failed.</strong></p>
+//
+//                     <ul>
+//                         <li><strong>Job:</strong> ${env.JOB_NAME}</li>
+//                         <li><strong>Build:</strong> #${env.BUILD_NUMBER}</li>
+//                         <li><strong>Allure Report:</strong> <a href="${env.BUILD_URL}allure">${env.BUILD_URL}allure</a></li>
+//                         <li><strong>Pytest HTML Report:</strong> Available in archived artifacts.</li>
+//                         <li><strong>Logs:</strong> <a href="${env.BUILD_URL}console">${env.BUILD_URL}console</a></li>
+//                     </ul>
+//
+//                     <p>Regards,<br>Madhan</p>
+//                 """,
+//                 from: "Madhan <mmr091296@gmail.com>"
+//             )
+//         }
 //     }
-//
-//     success {
-//         emailext(
-//             to: 'mmr091296@gmail.com, kmr91296@gmail.com',
-//             subject: "✅ Jenkins Job: ${env.JOB_NAME} #${env.BUILD_NUMBER} - SUCCESS",
-//             mimeType: 'text/html',
-//             body: """
-//                 <p>✅ <strong>Build completed successfully!</strong></p>
-//
-//                 <ul>
-//                     <li><strong>Job:</strong> ${env.JOB_NAME}</li>
-//                     <li><strong>Build:</strong> #${env.BUILD_NUMBER}</li>
-//                     <li><strong>Report:</strong> <a href="${env.BUILD_URL}allure">${env.BUILD_URL}allure</a></li>
-//                     <li><strong>Logs:</strong> <a href="${env.BUILD_URL}console">${env.BUILD_URL}console</a></li>
-//                 </ul>
-//
-//                 <p>Regards,<br>Madhan</p>
-//             """,
-//             from: "Madhan <mmr091296@gmail.com>"
-//         )
-//     }
-//
-//     failure {
-//         emailext(
-//             to: 'mmr091296@gmail.com, kmr91296@gmail.com',
-//             subject: "❌ Jenkins Job: ${env.JOB_NAME} #${env.BUILD_NUMBER} - FAILURE",
-//             mimeType: 'text/html',
-//             body: """
-//                 <p>❌ <strong>Build failed.</strong></p>
-//
-//                 <ul>
-//                     <li><strong>Job:</strong> ${env.JOB_NAME}</li>
-//                     <li><strong>Build:</strong> #${env.BUILD_NUMBER}</li>
-//                     <li><strong>Report:</strong> <a href="${env.BUILD_URL}allure">${env.BUILD_URL}allure</a></li>
-//                     <li><strong>Logs:</strong> <a href="${env.BUILD_URL}console">${env.BUILD_URL}console</a></li>
-//                 </ul>
-//
-//                 <p>Regards,<br>Madhan</p>
-//             """,
-//             from: "Madhan <mmr091296@gmail.com>"
-//         )
-//     }
-// }
 // }
 
 
 pipeline {
     agent any
 
+    // ---------- Parameters ----------
     parameters {
-        choice(name: 'BROWSER', choices: ['edge', 'chrome', 'firefox'], description: 'Browser name')
-        choice(name: 'MARKER', choices: ['smoke', 'all', 'sanity'], description: 'Test group')
-        choice(name: 'PARALLEL', choices: ['1', '2', '3'], description: 'Threads')
+        choice(name: 'BROWSER', choices: ['edge', 'chrome', 'firefox'], description: 'Select the browser')
+        choice(name: 'MARKER', choices: ['smoke', 'all', 'sanity'], description: 'Select test group/marker')
+        choice(name: 'PARALLEL', choices: ['1', '2', '3'], description: 'No. of parallel threads')
     }
 
+    // ---------- Environment Variables ----------
     environment {
-        REPORT_DIR = "reports"
+        REPORT_DIR     = "reports"
         ALLURE_RESULTS = "${REPORT_DIR}\\allure-results"
-        ALLURE_HTML = "${REPORT_DIR}\\allure-html"
-        PYTEST_HTML = "${REPORT_DIR}\\pytest-report.html"
+        ALLURE_HTML    = "${REPORT_DIR}\\allure-html"
+        PYTEST_HTML    = "${REPORT_DIR}\\pytest-report.html"
     }
 
+    // ---------- Stages ----------
     stages {
 
         stage('Initialize') {
             steps {
-                echo 'Initializing pipeline...'
+                echo '🔧 Initializing pipeline...'
             }
         }
 
         stage('Checkout Code') {
             steps {
+                echo '📥 Checking out code from GitHub...'
                 git url: 'https://github.com/Madhan-091296/TutorialNinja'
             }
         }
 
-        stage('Clean Reports') {
+        stage('Clean Old Reports') {
             steps {
-                echo "Cleaning previous reports..."
+                echo '🧹 Cleaning up old reports...'
                 bat "rmdir /s /q %ALLURE_RESULTS% || exit 0"
                 bat "rmdir /s /q %ALLURE_HTML% || exit 0"
                 bat "del %PYTEST_HTML% || exit 0"
@@ -174,38 +201,47 @@ pipeline {
 
         stage('Start Selenium Grid') {
             steps {
-                echo 'Starting Selenium Grid using Docker Compose...'
+                echo '🚀 Starting Selenium Grid via Docker...'
                 bat 'docker-compose down || exit 0'
                 bat 'docker-compose up -d'
             }
         }
 
-        stage('Install Requirements') {
+        stage('Install Python Dependencies') {
             steps {
+                echo '📦 Setting up virtual environment and installing dependencies...'
                 bat 'python -m venv venv'
                 bat 'call venv\\Scripts\\activate.bat && pip install -r requirements.txt'
             }
         }
 
-        stage('Run Tests') {
+        stage('Run Pytest Tests') {
             steps {
                 script {
                     def marker = params.MARKER
                     def markerOption = marker == 'all' ? '' : "-m ${marker}"
-                    def testCommand = "call venv\\Scripts\\activate.bat && pytest -s -v ${markerOption} --alluredir=%ALLURE_RESULTS% -n ${params.PARALLEL} testCases\\ --browser ${params.BROWSER} --html=%PYTEST_HTML% --self-contained-html"
-                    echo "Running tests with command: ${testCommand}"
-                    bat "${testCommand}"
+                    def command = """
+                        call venv\\Scripts\\activate.bat && pytest -s -v ${markerOption} \\
+                        --alluredir=%ALLURE_RESULTS% \\
+                        -n ${params.PARALLEL} testCases\\ \\
+                        --browser ${params.BROWSER} \\
+                        --html=%PYTEST_HTML% --self-contained-html
+                    """.trim()
+                    echo "🧪 Running tests: ${command}"
+                    bat "${command}"
                 }
             }
         }
 
-        stage('Generate Allure HTML Report') {
+        stage('Generate Allure Report') {
             steps {
-                echo "Generating Allure HTML report..."
+                echo '📊 Generating Allure HTML Report...'
                 bat "allure generate %ALLURE_RESULTS% -o %ALLURE_HTML% --clean"
             }
         }
 
+        // Optional: Uncomment if you want to show Pytest HTML report in Jenkins UI
+        /*
         stage('Publish Pytest HTML Report') {
             steps {
                 publishHTML(target: [
@@ -218,30 +254,35 @@ pipeline {
                 ])
             }
         }
+        */
 
-        stage('Publish Allure Report in Jenkins') {
+        stage('Publish Allure Report Link') {
             steps {
-                echo "Publishing Allure report in Jenkins UI..."
+                echo '🌐 Allure Report will be visible via Jenkins Allure Plugin.'
             }
         }
 
         stage('Archive Reports') {
             steps {
+                echo '📁 Archiving test reports...'
                 archiveArtifacts artifacts: "${ALLURE_HTML}/**", fingerprint: true
                 archiveArtifacts artifacts: "${PYTEST_HTML}", fingerprint: true
             }
         }
     }
 
+    // ---------- Post Actions ----------
     post {
         always {
-            echo "Always publishing Allure results..."
+            echo '🧾 Always publishing Allure results and stopping Docker Grid...'
+
+            // Publish Allure results to Jenkins UI
             allure includeProperties: false,
                    jdk: '',
                    results: [[path: "${env.ALLURE_RESULTS}"]]
 
-            echo "Stopping Selenium Grid..."
-            bat 'docker-compose down'
+            // Stop Selenium Grid
+            bat 'docker-compose down || true'
         }
 
         success {
@@ -251,15 +292,13 @@ pipeline {
                 mimeType: 'text/html',
                 body: """
                     <p>✅ <strong>Build completed successfully!</strong></p>
-
                     <ul>
                         <li><strong>Job:</strong> ${env.JOB_NAME}</li>
                         <li><strong>Build:</strong> #${env.BUILD_NUMBER}</li>
                         <li><strong>Allure Report:</strong> <a href="${env.BUILD_URL}allure">${env.BUILD_URL}allure</a></li>
-                        <li><strong>Pytest HTML Report:</strong> Available in archived artifacts.</li>
+                        <li><strong>Pytest HTML Report:</strong> Check archived artifacts.</li>
                         <li><strong>Logs:</strong> <a href="${env.BUILD_URL}console">${env.BUILD_URL}console</a></li>
                     </ul>
-
                     <p>Regards,<br>Madhan</p>
                 """,
                 from: "Madhan <mmr091296@gmail.com>"
@@ -273,15 +312,13 @@ pipeline {
                 mimeType: 'text/html',
                 body: """
                     <p>❌ <strong>Build failed.</strong></p>
-
                     <ul>
                         <li><strong>Job:</strong> ${env.JOB_NAME}</li>
                         <li><strong>Build:</strong> #${env.BUILD_NUMBER}</li>
                         <li><strong>Allure Report:</strong> <a href="${env.BUILD_URL}allure">${env.BUILD_URL}allure</a></li>
-                        <li><strong>Pytest HTML Report:</strong> Available in archived artifacts.</li>
+                        <li><strong>Pytest HTML Report:</strong> Check archived artifacts.</li>
                         <li><strong>Logs:</strong> <a href="${env.BUILD_URL}console">${env.BUILD_URL}console</a></li>
                     </ul>
-
                     <p>Regards,<br>Madhan</p>
                 """,
                 from: "Madhan <mmr091296@gmail.com>"
