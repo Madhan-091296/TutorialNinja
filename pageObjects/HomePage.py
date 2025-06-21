@@ -5,7 +5,7 @@ from pageObjects.SearchResultsPage import SearchResultsPage
 
 
 class HomePage:
-   lnk_myaccount_xpath = "//span[normalize-space()='My Account']"
+   lnk_myaccount_xpath = "//span[normalize-space()='My Account123']"
    lnk_register_xpath = "//a[normalize-space()='Register']"
    lnk_login_linktext = "Login"
    txt_searchbox_xpath = "//input[@placeholder='Search']"
