@@ -191,10 +191,7 @@ pipeline {
                 script {
                     def marker = params.MARKER
                     def markerOption = marker == 'all' ? '' : "-m ${marker}"
-                    def testCommand = """
-                        call venv\\Scripts\\activate.bat &&
-                        pytest -s -v ${markerOption} --alluredir=%ALLURE_RESULTS% -n ${params.PARALLEL} testCases\\ --browser ${params.BROWSER} --html=%PYTEST_HTML% --self-contained-html
-                    """
+                    def testCommand = "call venv\\Scripts\\activate.bat && pytest -s -v ${markerOption} --alluredir=%ALLURE_RESULTS% -n ${params.PARALLEL} testCases\\ --browser ${params.BROWSER} --html=%PYTEST_HTML% --self-contained-html"
                     echo "Running tests with command: ${testCommand}"
                     bat "${testCommand}"
                 }
