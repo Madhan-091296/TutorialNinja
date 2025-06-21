@@ -175,6 +175,7 @@ pipeline {
         stage('Start Selenium Grid') {
             steps {
                 echo 'Starting Selenium Grid using Docker Compose...'
+                bat 'docker-compose down || exit 0'
                 bat 'docker-compose up -d'
             }
         }

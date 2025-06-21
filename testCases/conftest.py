@@ -39,9 +39,9 @@ def browser(request):
 # Hook 1: Configure report path and add custom metadata
 @pytest.hookimpl(optionalhook=True)
 def pytest_configure(config):
-    config.option.htmlpath = (
-            os.path.abspath(os.getcwd()) + "\\reports\\" + datetime.now().strftime("%d-%m-%Y %H-%M-%S") + ".html"
-    )
+    # config.option.htmlpath = (
+    #         os.path.abspath(os.getcwd()) + "\\reports\\" + datetime.now().strftime("%d-%m-%Y %H-%M-%S") + ".html"
+    # )
     config.stash[metadata_key]['Project Name'] = 'TutorialNinja'
     config.stash[metadata_key]['Module Name'] = 'CustRegistration'
     config.stash[metadata_key]['Tester Name'] = 'KMR'
