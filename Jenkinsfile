@@ -118,7 +118,7 @@ pipeline {
     parameters {
         choice(name: 'BROWSER', choices: ['chrome', 'firefox', 'edge'], description: 'Browser name')
         choice(name: 'MARKER', choices: ['all', 'smoke', 'sanity', 'regression'], description: 'Test marker to run (select "all" to run everything)')
-        choice(name: 'PARALLEL', choices: ['2', '3', '4', '5'], description: 'Number of parallel threads')
+        choice(name: 'PARALLEL', choices: ['1','2', '3', '4', '5'], description: 'Number of parallel threads')
     }
 
     environment {
