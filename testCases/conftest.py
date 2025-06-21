@@ -122,26 +122,26 @@ def pytest_metadata(metadata):
     metadata.pop("Python", None)
     metadata.pop("Plugins", None)
 
-# Hook 3: Capture screenshot on test failure
-@pytest.hookimpl(tryfirst=True, hookwrapper=True)
-def pytest_runtest_makereport(item, call):
-    outcome = yield
-    rep = outcome.get_result()
-
-    if rep.when == "call" and rep.failed:
-        driver = item.funcargs.get("setup", None)
-        if driver:
-            try:
-                # This will fail if browser is already closed
-                screenshot_dir = os.path.abspath(os.getcwd()) + "/screenshots/"
-                os.makedirs(screenshot_dir, exist_ok=True)
-                path = f"{screenshot_dir}{item.name}.png"
-                driver.save_screenshot(path)
-                allure.attach(
-                    driver.get_screenshot_as_png(),
-                    name=item.name,
-                    attachment_type=AttachmentType.PNG
-                )
-            except Exception as e:
-                # Log but ignore errors like NoSuchWindowException
-                print(f"Error while capturing screenshot: {e}")
+# # Hook 3: Capture screenshot on test failure
+# @pytest.hookimpl(tryfirst=True, hookwrapper=True)
+# def pytest_runtest_makereport(item, call):
+#     outcome = yield
+#     rep = outcome.get_result()
+#
+#     if rep.when == "call" and rep.failed:
+#         driver = item.funcargs.get("setup", None)
+#         if driver:
+#             try:
+#                 # This will fail if browser is already closed
+#                 screenshot_dir = os.path.abspath(os.getcwd()) + "/screenshots/"
+#                 os.makedirs(screenshot_dir, exist_ok=True)
+#                 path = f"{screenshot_dir}{item.name}.png"
+#                 driver.save_screenshot(path)
+#                 allure.attach(
+#                     driver.get_screenshot_as_png(),
+#                     name=item.name,
+#                     attachment_type=AttachmentType.PNG
+#                 )
+#             except Exception as e:
+#                 # Log but ignore errors like NoSuchWindowException
+#                 print(f"Error while capturing screenshot: {e}")
