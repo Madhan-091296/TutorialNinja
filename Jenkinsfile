@@ -8,9 +8,9 @@ pipeline {
 //         pollSCM('* * * * *')
 //     }
     parameters {
-        choice(name: 'BROWSER', choices: ['chrome', 'firefox', 'edge'], defaultValue: 'edge', description: 'Browser name')
-        choice(name: 'MARKER', choices: ['all', 'smoke', 'sanity'], defaultValue: 'smoke', description: 'Test group')
-        choice(name: 'PARALLEL', choices: ['1','2','3'], defaultValue: '1', description: 'Threads')
+        choice(name: 'BROWSER', choices: ['edge', 'chrome', 'firefox'], description: 'Browser name')
+        choice(name: 'MARKER', choices: ['smoke', 'all', 'sanity'], description: 'Test group')
+        choice(name: 'PARALLEL', choices: ['1','2','3'], description: 'Threads')
     }
 
     environment {
