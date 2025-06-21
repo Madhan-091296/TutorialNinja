@@ -206,6 +206,19 @@ pipeline {
             }
         }
 
+        stage('Publish Pytest HTML Report') {
+            steps {
+                publishHTML(target: [
+                    reportDir: 'reports',
+                    reportFiles: 'pytest-report.html',
+                    reportName: 'Pytest HTML Report',
+                    keepAll: true,
+                    alwaysLinkToLastBuild: true,
+                    allowMissing: false
+                ])
+            }
+        }
+
         stage('Publish Allure Report in Jenkins') {
             steps {
                 echo "Publishing Allure report in Jenkins UI..."
