@@ -211,7 +211,7 @@ pipeline {
                 publishHTML(target: [
                     reportDir: 'reports',
                     reportFiles: 'pytest-report.html',
-                    reportName: 'Pytest HTML Report',
+                    reportName: '✅ Pytest HTML Report',
                     keepAll: true,
                     alwaysLinkToLastBuild: true,
                     allowMissing: false
