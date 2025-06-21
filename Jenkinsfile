@@ -81,31 +81,20 @@ pipeline {
     }
 
     post {
-        always {
-            echo "Always publishing Allure results..."
-            allure includeProperties: false,
-                   jdk: '',
-                   results: [[path: "${env.ALLURE_RESULTS}"]]
-        }
+    always {
+        echo "Always publishing Allure results..."
+        allure includeProperties: false,
+               jdk: '',
+               results: [[path: "${env.ALLURE_RESULTS}"]]
+    }
 
-        success {
-//             mail to: 'mmr091296@gmail.com, kmr91296@gmail.com',
-//                  subject: "✅ Jenkins Job: ${env.JOB_NAME} #${env.BUILD_NUMBER} - SUCCESS",
-//                  body: """Build completed successfully!,
-//                  from: 'Madhan <mmr091296@gmail.com>'
-//
-// Job: ${env.JOB_NAME}
-// Build: #${env.BUILD_NUMBER}
-// Report: ${env.BUILD_URL}allure
-// Logs: ${env.BUILD_URL}console
-// """
-emailext(
+    success {
+        emailext(
             to: 'mmr091296@gmail.com, kmr91296@gmail.com',
             subject: "✅ Jenkins Job: ${env.JOB_NAME} #${env.BUILD_NUMBER} - SUCCESS",
+            mimeType: 'text/html',
             body: """
-                <p>Hello Team,</p>
-
-                <p>The Jenkins job has completed successfully.</p>
+                <p>✅ <strong>Build completed successfully!</strong></p>
 
                 <ul>
                     <li><strong>Job:</strong> ${env.JOB_NAME}</li>
@@ -114,22 +103,31 @@ emailext(
                     <li><strong>Logs:</strong> <a href="${env.BUILD_URL}console">${env.BUILD_URL}console</a></li>
                 </ul>
 
-                <p>Regards,<br>Madhan's Jenkins</p>
+                <p>Regards,<br>Madhan</p>
             """,
-            mimeType: 'text/html'
+            from: "Madhan <mmr091296@gmail.com>"
         )
-        }
-
-        failure {
-            mail to: 'mmr091296@gmail.com',
-                 subject: "❌ Jenkins Job: ${env.JOB_NAME} #${env.BUILD_NUMBER} - FAILURE",
-                 body: """Build failed.
-
-Job: ${env.JOB_NAME}
-Build: #${env.BUILD_NUMBER}
-Report: ${env.BUILD_URL}allure
-Logs: ${env.BUILD_URL}console
-"""
-        }
     }
+
+    failure {
+        emailext(
+            to: 'mmr091296@gmail.com',
+            subject: "❌ Jenkins Job: ${env.JOB_NAME} #${env.BUILD_NUMBER} - FAILURE",
+            mimeType: 'text/html',
+            body: """
+                <p>❌ <strong>Build failed.</strong></p>
+
+                <ul>
+                    <li><strong>Job:</strong> ${env.JOB_NAME}</li>
+                    <li><strong>Build:</strong> #${env.BUILD_NUMBER}</li>
+                    <li><strong>Report:</strong> <a href="${env.BUILD_URL}allure">${env.BUILD_URL}allure</a></li>
+                    <li><strong>Logs:</strong> <a href="${env.BUILD_URL}console">${env.BUILD_URL}console</a></li>
+                </ul>
+
+                <p>Regards,<br>Madhan</p>
+            """,
+            from: "Madhan <mmr091296@gmail.com>"
+        )
+    }
+}
 }
