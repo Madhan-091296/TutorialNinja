@@ -87,6 +87,7 @@ pipeline {
             }
         }
 
+
         stage('Generate Allure Report') {
             steps {
                 echo '📊 Generating Allure HTML Report...'
@@ -134,6 +135,7 @@ pipeline {
                    jdk: '',
                    results: [[path: "${env.ALLURE_RESULTS}"]]
 
+            echo "Stopping Selenium Grid..."
             bat 'docker-compose down || true'
         }
 
