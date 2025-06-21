@@ -89,16 +89,35 @@ pipeline {
         }
 
         success {
-            mail to: 'mmr091296@gmail.com, kmr91296@gmail.com',
-                 subject: "✅ Jenkins Job: ${env.JOB_NAME} #${env.BUILD_NUMBER} - SUCCESS",
-                 body: """Build completed successfully!,
-                 from: 'Madhan <mmr091296@gmail.com>'
+//             mail to: 'mmr091296@gmail.com, kmr91296@gmail.com',
+//                  subject: "✅ Jenkins Job: ${env.JOB_NAME} #${env.BUILD_NUMBER} - SUCCESS",
+//                  body: """Build completed successfully!,
+//                  from: 'Madhan <mmr091296@gmail.com>'
+//
+// Job: ${env.JOB_NAME}
+// Build: #${env.BUILD_NUMBER}
+// Report: ${env.BUILD_URL}allure
+// Logs: ${env.BUILD_URL}console
+// """
+emailext(
+            to: 'mmr091296@gmail.com, kmr91296@gmail.com',
+            subject: "✅ Jenkins Job: ${env.JOB_NAME} #${env.BUILD_NUMBER} - SUCCESS",
+            body: """
+                <p>Hello Team,</p>
 
-Job: ${env.JOB_NAME}
-Build: #${env.BUILD_NUMBER}
-Report: ${env.BUILD_URL}allure
-Logs: ${env.BUILD_URL}console
-"""
+                <p>The Jenkins job has completed successfully.</p>
+
+                <ul>
+                    <li><strong>Job:</strong> ${env.JOB_NAME}</li>
+                    <li><strong>Build:</strong> #${env.BUILD_NUMBER}</li>
+                    <li><strong>Report:</strong> <a href="${env.BUILD_URL}allure">${env.BUILD_URL}allure</a></li>
+                    <li><strong>Logs:</strong> <a href="${env.BUILD_URL}console">${env.BUILD_URL}console</a></li>
+                </ul>
+
+                <p>Regards,<br>Madhan's Jenkins</p>
+            """,
+            mimeType: 'text/html'
+        )
         }
 
         failure {
