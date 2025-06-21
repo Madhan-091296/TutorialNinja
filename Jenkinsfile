@@ -115,6 +115,14 @@
 pipeline {
     agent any
 
+//   triggers {
+//         // Uncomment if you want scheduled runs (e.g., every day at 7 AM)
+//         // cron('H 7 * * *')
+//
+//         // Uncomment if you want auto-trigger on Git changes
+//         pollSCM('* * * * *')
+//     }
+
     parameters {
         choice(name: 'BROWSER', choices: ['chrome', 'firefox', 'edge'], description: 'Browser name')
         choice(name: 'MARKER', choices: ['all', 'smoke', 'sanity', 'regression'], description: 'Test marker to run (select "all" to run everything)')
