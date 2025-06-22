@@ -27,7 +27,7 @@ def setup(browser):
         # driver = webdriver.Chrome(options=options)
         print("Launching Chrome browser.........")
     yield driver
-    # driver.quit()
+    driver.quit()
 
 
 # CLI argument hook
