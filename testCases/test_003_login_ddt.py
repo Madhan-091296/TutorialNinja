@@ -14,7 +14,8 @@ from utilities.customLogger import LogGen
 class Test_LoginDDT:
     baseURL = ReadConfig.getApplicationURL()
     logger = LogGen.loggen()
-    path = os.path.abspath(os.getcwd()) + '\\testData\\Tutorialninja_LoginData.xlsx'
+    # path = os.path.abspath(os.getcwd()) + '\\testData\\Tutorialninja_LoginData.xlsx'
+    path = os.path.join(os.getcwd(), "testData", "Tutorialninja_LoginData.xlsx")
     # path = '..\\testData\\Tutorialninja_LoginData.xlsx'
 
     @allure.severity(allure.severity_level.MINOR)
