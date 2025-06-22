@@ -65,15 +65,7 @@ def setup(browser_platform):
       else:
           options = webdriver.ChromeOptions()
           options.add_experimental_option("detach", True)
-          # ✅ Fix: Provide isolated user-data-dir
-          temp_dir = tempfile.mkdtemp()
-          # options.add_argument(f"--user-data-dir={temp_dir}")
-
-          # ✅ Recommended for CI: Run headless & safe
-          # options.add_argument("--headless=new")
-          options.add_argument("--window-size=1920,1080")
-          options.add_argument("--no-sandbox")
-          options.add_argument("--disable-dev-shm-usage")
+          options.add_argument("--incognito")
           driver = webdriver.Chrome(options=options)
           print("Launching chrome browser.........")
   yield driver
