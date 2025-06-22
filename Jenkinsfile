@@ -81,15 +81,13 @@ pipeline {
                             -n ${params.PARALLEL} testCases\\ ^
                             --browser ${params.BROWSER} ^
                             --html=%PYTEST_HTML% --self-contained-html
-                        """.trim()
+                        """
                         echo "🧪 Running tests: ${command}"
                         bat "${command}"
                     }
                 }
             }
         }
-
-
 
         stage('Generate Allure Report') {
             steps {
