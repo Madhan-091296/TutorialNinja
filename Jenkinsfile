@@ -199,7 +199,7 @@ pipeline {
 
     parameters {
         choice(name: 'BROWSER', choices: ['chrome', 'edge', 'firefox'], description: 'Select the browser')
-        choice(name: 'MARKER', choices: ['smoke', 'smoke or sanity or regression',"regression", 'sanity'], description: 'Select test group/marker')
+        choice(name: 'MARKER', choices: ['smoke', 'all', 'sanity'], description: 'Select test group/marker')
         choice(name: 'PARALLEL', choices: ['1', '2', '3'], description: 'No. of parallel threads')
     }
 
@@ -258,8 +258,10 @@ pipeline {
             steps {
                 script {
                     catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                        def marker = params.MARKER
+                        def markerOption = marker == 'all' ? '' : "-m ${marker}"
                         def command = """
-                            . venv/bin/activate && pytest -s -v "-m ${marker}" \\
+                            . venv/bin/activate && pytest -s -v ${markerOption} \\
                             --alluredir=${ALLURE_RESULTS} \\
                             testCases/ \\
                             --browser ${params.BROWSER} \\
