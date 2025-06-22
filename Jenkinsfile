@@ -259,7 +259,7 @@ pipeline {
                 script {
                     catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                         def command = """
-                            . venv/bin/activate && pytest -s -v ${params.MARKER} \\
+                            . venv/bin/activate && pytest -s -v -m ${params.MARKER} \\
                             --alluredir=${ALLURE_RESULTS} \\
                             testCases/ \\
                             --browser ${params.BROWSER} \\
