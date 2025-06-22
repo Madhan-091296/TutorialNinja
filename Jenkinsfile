@@ -263,7 +263,7 @@ pipeline {
                         def command = """
                             . venv/bin/activate && pytest -s -v ${markerOption} \\
                             --alluredir=${ALLURE_RESULTS} \\
-                            -n ${params.PARALLEL} testCases/ \\
+                            testCases/ \\
                             --browser ${params.BROWSER} \\
                             --html=${PYTEST_HTML} --self-contained-html
                         """
