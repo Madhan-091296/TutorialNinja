@@ -13,6 +13,7 @@ def setup(browser):
     if browser == 'edge':
         options = webdriver.EdgeOptions()
         options.add_experimental_option("detach", True)
+        options.add_argument("--headless")
         driver = webdriver.Edge(options=options)
         print("Launching Edge browser.........")
     elif browser == 'firefox':
