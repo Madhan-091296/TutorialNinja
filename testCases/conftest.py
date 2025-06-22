@@ -13,9 +13,7 @@ def setup(browser):
     if browser == 'edge':
         options = webdriver.EdgeOptions()
         options.add_experimental_option("detach", True)
-        # driver = webdriver.Edge(options=options)
-        options.platform_name="LINUX"
-        driver = webdriver.Remote(command_executor="http://localhost:4444/wd/hub", options=options)
+        driver = webdriver.Edge(options=options)
         print("Launching Edge browser.........")
     elif browser == 'firefox':
         options = webdriver.FirefoxOptions()
@@ -24,10 +22,12 @@ def setup(browser):
     else:
         options = webdriver.ChromeOptions()
         options.add_experimental_option("detach", True)
-        driver = webdriver.Chrome(options=options)
+        options.platform_name = "LINUX"
+        driver = webdriver.Remote(command_executor="http://localhost:4444/wd/hub", options=options)
+        # driver = webdriver.Chrome(options=options)
         print("Launching Chrome browser.........")
     yield driver
-    driver.quit()
+    # driver.quit()
 
 
 # CLI argument hook

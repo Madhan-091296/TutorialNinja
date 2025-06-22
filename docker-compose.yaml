@@ -1,42 +1,49 @@
-#services:
-# selenium-hub:
-#   image: selenium/hub
-#   ports:
-#     - "4442-4444:4442-4444"
-#   networks:
-#     - grid
-# node-chrome:
-#   image: selenium/node-chrome
-#   environment:
-#     - SE_EVENT_BUS_HOST=selenium-hub
-#     - SE_EVENT_BUS_PUBLISH_PORT=4442
-#     - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
-#   networks:
-#     - grid
-# node-firefox:
-#   image: selenium/node-firefox
-#   environment:
-#     - SE_EVENT_BUS_HOST=selenium-hub
-#     - SE_EVENT_BUS_PUBLISH_PORT=4442
-#     - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
-#   networks:
-#     - grid
-#networks:
-# grid:
-#   driver: bridge
-
-version: "3"
 services:
-  selenium-hub:
-    image: selenium/hub:4.15.0
-    container_name: selenium-hub
-    ports:
-      - "4442:4442"
-      - "4443:4443"
-      - "4444:4444"
-    networks:
-      - grid
+ selenium-hub:
+   image: selenium/hub
+   container_name: selenium-hub
+   ports:
+     - "4442-4444:4442-4444"
+   networks:
+     - grid
+ node-chrome:
+   image: selenium/node-chrome
+   container_name: node-chrome
+   depends_on:
+     - selenium-hub
+   environment:
+     - SE_EVENT_BUS_HOST=selenium-hub
+     - SE_EVENT_BUS_PUBLISH_PORT=4442
+     - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+   networks:
+     - grid
+ node-firefox:
+   image: selenium/node-firefox
+   container_name: node-firefox
+   depends_on:
+     - selenium-hub
+   environment:
+     - SE_EVENT_BUS_HOST=selenium-hub
+     - SE_EVENT_BUS_PUBLISH_PORT=4442
+     - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+   networks:
+     - grid
+networks:
+ grid:
+   driver: bridge
 
+#version: "3"
+#services:
+#  selenium-hub:
+#    image: selenium/hub:4.15.0
+#    container_name: selenium-hub
+#    ports:
+#      - "4442:4442"
+#      - "4443:4443"
+#      - "4444:4444"
+#    networks:
+#      - grid
+#
 #  chrome:
 #    image: selenium/node-chrome:4.15.0
 #    container_name: node-chrome
@@ -49,20 +56,20 @@ services:
 #      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
 #    networks:
 #      - grid
-
-  edge:
-    image: selenium/node-edge:4.15.0
-    container_name: node-edge
-    shm_size: 2gb
-    depends_on:
-      - selenium-hub
-    environment:
-      - SE_EVENT_BUS_HOST=selenium-hub
-      - SE_EVENT_BUS_PUBLISH_PORT=4442
-      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
-    networks:
-      - grid
 #
+#  edge:
+#    image: selenium/node-edge:4.15.0
+#    container_name: node-edge
+#    shm_size: 2gb
+#    depends_on:
+#      - selenium-hub
+#    environment:
+#      - SE_EVENT_BUS_HOST=selenium-hub
+#      - SE_EVENT_BUS_PUBLISH_PORT=4442
+#      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+#    networks:
+#      - grid
+##
 #  firefox:
 #    image: selenium/node-firefox:4.15.0
 #    container_name: node-firefox
@@ -75,7 +82,7 @@ services:
 #      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
 #    networks:
 #      - grid
-
-networks:
-  grid:
-    driver: bridge
+#
+#networks:
+#  grid:
+#    driver: bridge
