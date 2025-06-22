@@ -5,37 +5,87 @@ from pytest_metadata.plugin import metadata_key
 from selenium import webdriver
 import os
 from datetime import datetime
+from utilities.readProperties import ReadConfig
 
 
 # Fixture to launch browser
+# @pytest.fixture()
+# def setup(browser):
+#     if browser == 'edge':
+#         options = webdriver.EdgeOptions()
+#         options.add_experimental_option("detach", True)
+#         options.add_argument("--headless")
+#         driver = webdriver.Edge(options=options)
+#         print("Launching Edge browser.........")
+#     elif browser == 'firefox':
+#         options = webdriver.FirefoxOptions()
+#         driver = webdriver.Firefox(options=options)
+#         print("Launching Firefox browser.........")
+#     else:
+#         options = webdriver.ChromeOptions()
+#         options.add_experimental_option("detach", True)
+#         driver = webdriver.Chrome(options=options)
+#         print("Launching Chrome browser.........")
+#     yield driver
+#     driver.quit()
+
 @pytest.fixture()
-def setup(browser):
-    if browser == 'edge':
-        options = webdriver.EdgeOptions()
-        options.add_experimental_option("detach", True)
-        options.add_argument("--headless")
-        driver = webdriver.Edge(options=options)
-        print("Launching Edge browser.........")
-    elif browser == 'firefox':
-        options = webdriver.FirefoxOptions()
-        driver = webdriver.Firefox(options=options)
-        print("Launching Firefox browser.........")
-    else:
-        options = webdriver.ChromeOptions()
-        options.add_experimental_option("detach", True)
-        driver = webdriver.Chrome(options=options)
-        print("Launching Chrome browser.........")
-    yield driver
-    driver.quit()
+def setup(browser_platform):
+  baseenv = ReadConfig.getEnvironment()
+  browser,platform = browser_platform
+  if baseenv == "remote":
+      options = {
+          "chrome": webdriver.ChromeOptions,
+          "edge": webdriver.EdgeOptions,
+          "firefox": webdriver.FirefoxOptions
+      }
+      if browser not in options:
+          raise ValueError(f"Unsupported browser: {browser}")
+      platform_mapping = {"windows": "WIN10", "mac": "MAC", "linux": "LINUX"}
+      platform_name = platform_mapping.get(platform)
+      if not platform_name:
+          raise ValueError(f"Unsupported platform: {platform}")
+      opt = options[browser]()
+      opt.add_experimental_option("detach", True) if browser in ["chrome", "edge"] else None
+      # opt.add_argument("--headless")
+      opt.platform_name = platform_name
+      driver = webdriver.Remote(command_executor="http://localhost:4444/wd/hub", options=opt)
+  elif baseenv == "local":
+      if browser == 'edge':
+          options = webdriver.EdgeOptions()
+          options.add_experimental_option("detach", True)
+          driver = webdriver.Edge(options=options)
+          print("Launching Edge browser.........")
+      elif browser == 'firefox':
+          options = webdriver.FirefoxOptions()
+          driver = webdriver.Firefox(options=options)
+          print("Launching firefox browser.........")
+      else:
+          options = webdriver.ChromeOptions()
+          options.add_experimental_option("detach", True)
+          driver = webdriver.Chrome(options=options)
+          print("Launching chrome browser.........")
+  yield driver
+  driver.quit()
 
 # CLI argument hook
+# def pytest_addoption(parser):
+#     parser.addoption("--browser")
+
 def pytest_addoption(parser):
-    parser.addoption("--browser")
+  parser.addoption("--browser", default="chrome", choices=["chrome", "edge", "firefox"], help = "Browser to test")
+  parser.addoption("--os", default="linux", choices=["windows", "mac", "linux"], help = "Operating system to test")
 
 # Fixture to fetch browser option
+# @pytest.fixture()
+# def browser(request):
+#     return request.config.getoption("--browser")
+
 @pytest.fixture()
-def browser(request):
-    return request.config.getoption("--browser")
+def browser_platform(request):
+  browser = request.config.getoption("--browser")
+  platform = request.config.getoption("--os")
+  return browser,platform
 
 # Hook 1: Configure report path and add custom metadata
 @pytest.hookimpl(optionalhook=True)
