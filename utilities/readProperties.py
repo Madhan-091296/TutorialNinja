@@ -29,7 +29,3 @@ class ReadConfig():
   def getTotalPrice():
       totalprice = (config.get('commonInfo', 'totalPrice'))
       return totalprice
-  @staticmethod
-  def getEnvironment():
-      environment = (config.get('commonInfo', 'execution_env'))
-      return environment
