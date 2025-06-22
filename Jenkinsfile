@@ -242,18 +242,17 @@ pipeline {
             }
         }
 
-        stage('Install Python Dependencies') {
+       stage('Install Python Dependencies') {
             steps {
                 echo '📦 Setting up virtual environment and installing dependencies...'
-                sh '''
-                 bash -c "
-                    python3 -m venv venv
-                    source venv/bin/activate
-                    pip install -r requirements.txt
-                 "
+                sh '''#!/bin/bash
+                python3 -m venv venv
+                source venv/bin/activate
+                pip install -r requirements.txt
                 '''
             }
         }
+
 
         stage('Run Pytest Tests') {
             steps {
@@ -261,17 +260,16 @@ pipeline {
                     catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                         def marker = params.MARKER
                         def markerOption = marker == 'all' ? '' : "-m ${marker}"
-                        def command = """
-                          bash -c '
-                            source venv/bin/activate && pytest -s -v ${markerOption} \\
+                        def command = """#!/bin/bash
+                        source venv/bin/activate
+                        pytest -s -v ${markerOption} \\
                             --alluredir=${ALLURE_RESULTS} \\
                             -n ${params.PARALLEL} testCases/ \\
                             --browser ${params.BROWSER} \\
                             --html=${PYTEST_HTML} --self-contained-html
-                          '
                         """
-                        echo "🧪 Running tests: ${command}"
-                        sh "${command}"
+                        echo "🧪 Running tests..."
+                        sh command
                     }
                 }
             }
