@@ -245,11 +245,11 @@ pipeline {
        stage('Install Python Dependencies') {
             steps {
                 echo '📦 Setting up virtual environment and installing dependencies...'
-                sh '''#!/bin/bash
-                python3 -m venv venv
-                source venv/bin/activate
-                pip install -r requirements.txt
-                '''
+                sh(script: '''
+                    python3 -m venv venv
+                    source venv/bin/activate
+                    pip install -r requirements.txt
+                ''', shell: '/bin/bash')
             }
         }
 
@@ -260,20 +260,19 @@ pipeline {
                     catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                         def marker = params.MARKER
                         def markerOption = marker == 'all' ? '' : "-m ${marker}"
-                        def command = """#!/bin/bash
-                        source venv/bin/activate
-                        pytest -s -v ${markerOption} \\
-                            --alluredir=${ALLURE_RESULTS} \\
-                            -n ${params.PARALLEL} testCases/ \\
-                            --browser ${params.BROWSER} \\
-                            --html=${PYTEST_HTML} --self-contained-html
-                        """
-                        echo "🧪 Running tests..."
-                        sh command
+                        sh(script: """
+                            source venv/bin/activate
+                            pytest -s -v ${markerOption} \\
+                                --alluredir=${ALLURE_RESULTS} \\
+                                -n ${params.PARALLEL} testCases/ \\
+                                --browser ${params.BROWSER} \\
+                                --html=${PYTEST_HTML} --self-contained-html
+                        """, shell: '/bin/bash')
                     }
                 }
             }
         }
+
 
         stage('Generate Allure Report') {
             steps {
