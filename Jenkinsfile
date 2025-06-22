@@ -246,8 +246,11 @@ pipeline {
             steps {
                 echo '📦 Setting up virtual environment and installing dependencies...'
                 sh '''
+                 bash -c "
                     python3 -m venv venv
-                    ./venv/bin/pip install -r requirements.txt
+                    source venv/bin/activate
+                    pip install -r requirements.txt
+                 "
                 '''
             }
         }
@@ -259,11 +262,13 @@ pipeline {
                         def marker = params.MARKER
                         def markerOption = marker == 'all' ? '' : "-m ${marker}"
                         def command = """
+                          bash -c '
                             source venv/bin/activate && pytest -s -v ${markerOption} \\
                             --alluredir=${ALLURE_RESULTS} \\
                             -n ${params.PARALLEL} testCases/ \\
                             --browser ${params.BROWSER} \\
                             --html=${PYTEST_HTML} --self-contained-html
+                          '
                         """
                         echo "🧪 Running tests: ${command}"
                         sh "${command}"
