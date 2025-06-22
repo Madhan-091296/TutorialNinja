@@ -259,7 +259,7 @@ pipeline {
                 script {
                     catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                         def marker = params.MARKER
-                        def markerOption = marker == 'all' ? '' : "-m ${marker}"
+                        def markerOption = marker == 'all' ? "-m 'regression or smoke or sanity'" : "-m ${marker}"
                         def command = """
                             . venv/bin/activate && pytest -s -v ${markerOption} \\
                             --alluredir=${ALLURE_RESULTS} \\
