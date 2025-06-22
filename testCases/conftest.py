@@ -13,7 +13,9 @@ def setup(browser):
     if browser == 'edge':
         options = webdriver.EdgeOptions()
         options.add_experimental_option("detach", True)
-        driver = webdriver.Edge(options=options)
+        # driver = webdriver.Edge(options=options)
+        options.platform_name="LINUX"
+        driver = webdriver.Remote(command_executor="http://localhost:4444/wd/hub", options=options)
         print("Launching Edge browser.........")
     elif browser == 'firefox':
         options = webdriver.FirefoxOptions()
