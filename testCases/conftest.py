@@ -67,7 +67,7 @@ def setup(browser_platform):
           options.add_experimental_option("detach", True)
           # ✅ Fix: Provide isolated user-data-dir
           temp_dir = tempfile.mkdtemp()
-          options.add_argument(f"--user-data-dir={temp_dir}")
+          # options.add_argument(f"--user-data-dir={temp_dir}")
 
           # ✅ Recommended for CI: Run headless & safe
           # options.add_argument("--headless=new")
