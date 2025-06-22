@@ -237,8 +237,8 @@ pipeline {
         stage('Start Selenium Grid') {
             steps {
                 echo '🚀 Starting Selenium Grid via Docker...'
-//                 sh 'docker-compose down || true'
-//                 sh 'docker-compose up -d'
+                sh 'docker-compose down || true'
+                sh 'docker-compose up -d'
             }
         }
 
@@ -305,8 +305,8 @@ pipeline {
                    jdk: '',
                    results: [[path: "${env.ALLURE_RESULTS}"]]
 
-//             echo "Stopping Selenium Grid..."
-//             sh 'docker-compose down || true'
+            echo "Stopping Selenium Grid..."
+            sh 'docker-compose down || true'
         }
 
         success {
