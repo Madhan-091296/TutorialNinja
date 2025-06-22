@@ -22,9 +22,9 @@ def setup(browser):
     else:
         options = webdriver.ChromeOptions()
         options.add_experimental_option("detach", True)
-        options.platform_name = "LINUX"
-        driver = webdriver.Remote(command_executor="http://localhost:4444/wd/hub", options=options)
-        # driver = webdriver.Chrome(options=options)
+        # options.platform_name = "LINUX"
+        # driver = webdriver.Remote(command_executor="http://localhost:4444/wd/hub", options=options)
+        driver = webdriver.Chrome(options=options)
         print("Launching Chrome browser.........")
     yield driver
     # driver.quit()
