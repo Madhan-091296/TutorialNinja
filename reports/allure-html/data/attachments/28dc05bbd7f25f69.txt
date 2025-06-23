@@ -1,6 +1,6 @@
 [32mINFO    [0m utilities.customLogger:test_004_end_to_end.py:23 *** End-to-End Test Execution Started ***
 [32mINFO    [0m utilities.customLogger:test_004_end_to_end.py:43 *** Starting Registration ***
-[32mINFO    [0m utilities.customLogger:test_004_end_to_end.py:59 Registration successful with email: zobie@gmail.com
+[32mINFO    [0m utilities.customLogger:test_004_end_to_end.py:59 Registration successful with email: 2wt7g@gmail.com
 [32mINFO    [0m utilities.customLogger:test_004_end_to_end.py:63 *** Logging out ***
 [32mINFO    [0m utilities.customLogger:test_004_end_to_end.py:69 Logout successful and home page visible
 [32mINFO    [0m utilities.customLogger:test_004_end_to_end.py:72 *** Logging in with registered email ***

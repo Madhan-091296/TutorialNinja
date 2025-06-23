@@ -1,0 +1,2 @@
+[32mINFO    [0m utilities.customLogger:test_003_login_ddt.py:23 ********* Test Login DDT Started *********
+[32mINFO    [0m utilities.customLogger:test_003_login_ddt.py:28 ********* Launching Application *********
