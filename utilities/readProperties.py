@@ -1,9 +1,7 @@
 import configparser
 import os
 config = configparser.RawConfigParser()
-config_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "configurations", "config.ini"))
-config.read(config_path)
-# config.read(os.path.abspath(os.getcwd())+'\\configurations\\config.ini')
+config.read(os.path.abspath(os.getcwd())+'\\configurations\\config.ini')
 class ReadConfig():
   @staticmethod
   def getApplicationURL():

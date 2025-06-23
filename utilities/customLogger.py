@@ -5,7 +5,6 @@ class LogGen:
     @staticmethod
     def loggen():
         path = (os.path.abspath(os.getcwd())+"\\logs\\automation.log")
-        # path = (os.path.dirname(os.getcwd()) + "\\logs\\automation.log")
         logger = logging.getLogger(name=__name__)
         logger.setLevel(logging.DEBUG)
         formatter = logging.Formatter('%(asctime)s: %(levelname)s: %(message)s', datefmt='%m/%d/%Y  %I:%M:%S %p')

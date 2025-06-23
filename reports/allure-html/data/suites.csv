@@ -1,3 +1,0 @@
-"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","3054","test_account_reg","","Fri Jun 20 19:09:09 IST 2025","passed","Fri Jun 20 19:09:12 IST 2025","Test_001_AccountReg","test_001_AccountRegistration","",""
-"","2698","test_login","","Fri Jun 20 19:09:07 IST 2025","passed","Fri Jun 20 19:09:09 IST 2025","TestLogin","test_002_login","",""
