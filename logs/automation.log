@@ -2645,3 +2645,109 @@
 06/23/2025  02:57:50 PM: INFO: *** End-to-End Test Completed Successfully ***
 06/23/2025  02:57:50 PM: INFO: *** End-to-End Test Completed Successfully ***
 06/23/2025  02:57:50 PM: INFO: *** End-to-End Test Completed Successfully ***
+06/23/2025  03:22:41 PM: INFO: ********* Test Account Registration Started *********
+06/23/2025  03:22:43 PM: INFO: ********* Launching Application *********
+06/23/2025  03:22:43 PM: INFO: ********* Clicking on My Account --> Register *********
+06/23/2025  03:22:44 PM: INFO: ********* Adding Customer Details *********
+06/23/2025  03:22:45 PM: INFO: ********* Account Registration is Passed *********
+06/23/2025  03:22:45 PM: INFO: ********* Test Account Registration Finished *********
+06/23/2025  04:57:46 PM: INFO: ********* Test Account Registration Started *********
+06/23/2025  04:57:46 PM: INFO: ********* Test Account Registration Started *********
+06/23/2025  04:57:46 PM: INFO: ********* Test Account Registration Started *********
+06/23/2025  04:57:46 PM: INFO: ********* Test Account Registration Started *********
+06/23/2025  04:57:48 PM: INFO: ********* Launching Application *********
+06/23/2025  04:57:48 PM: INFO: ********* Launching Application *********
+06/23/2025  04:57:48 PM: INFO: ********* Launching Application *********
+06/23/2025  04:57:48 PM: INFO: ********* Launching Application *********
+06/23/2025  04:57:48 PM: INFO: ********* Clicking on My Account --> Register *********
+06/23/2025  04:57:48 PM: INFO: ********* Clicking on My Account --> Register *********
+06/23/2025  04:57:48 PM: INFO: ********* Clicking on My Account --> Register *********
+06/23/2025  04:57:48 PM: INFO: ********* Clicking on My Account --> Register *********
+06/23/2025  04:57:49 PM: INFO: ********* Adding Customer Details *********
+06/23/2025  04:57:49 PM: INFO: ********* Adding Customer Details *********
+06/23/2025  04:57:49 PM: INFO: ********* Adding Customer Details *********
+06/23/2025  04:57:49 PM: INFO: ********* Adding Customer Details *********
+06/23/2025  04:57:51 PM: INFO: ********* Account Registration is Passed *********
+06/23/2025  04:57:51 PM: INFO: ********* Account Registration is Passed *********
+06/23/2025  04:57:51 PM: INFO: ********* Account Registration is Passed *********
+06/23/2025  04:57:51 PM: INFO: ********* Account Registration is Passed *********
+06/23/2025  04:57:51 PM: INFO: ********* Test Account Registration Finished *********
+06/23/2025  04:57:51 PM: INFO: ********* Test Account Registration Finished *********
+06/23/2025  04:57:51 PM: INFO: ********* Test Account Registration Finished *********
+06/23/2025  04:57:51 PM: INFO: ********* Test Account Registration Finished *********
+06/23/2025  04:58:00 PM: INFO: ********* Test Login Started *********
+06/23/2025  04:58:00 PM: INFO: ********* Test Login Started *********
+06/23/2025  04:58:00 PM: INFO: ********* Test Login Started *********
+06/23/2025  04:58:00 PM: INFO: ********* Test Login Started *********
+06/23/2025  04:58:02 PM: INFO: ********* Launching Application *********
+06/23/2025  04:58:02 PM: INFO: ********* Launching Application *********
+06/23/2025  04:58:02 PM: INFO: ********* Launching Application *********
+06/23/2025  04:58:02 PM: INFO: ********* Launching Application *********
+06/23/2025  04:58:02 PM: INFO: ********* Clicking on My Account --> Login *********
+06/23/2025  04:58:02 PM: INFO: ********* Clicking on My Account --> Login *********
+06/23/2025  04:58:02 PM: INFO: ********* Clicking on My Account --> Login *********
+06/23/2025  04:58:02 PM: INFO: ********* Clicking on My Account --> Login *********
+06/23/2025  04:58:03 PM: INFO: ********* Test Login Finished *********
+06/23/2025  04:58:03 PM: INFO: ********* Test Login Finished *********
+06/23/2025  04:58:03 PM: INFO: ********* Test Login Finished *********
+06/23/2025  04:58:03 PM: INFO: ********* Test Login Finished *********
+06/23/2025  04:58:13 PM: INFO: ********* Test Login DDT Started *********
+06/23/2025  04:58:13 PM: INFO: ********* Test Login DDT Started *********
+06/23/2025  04:58:13 PM: INFO: ********* Test Login DDT Started *********
+06/23/2025  04:58:13 PM: INFO: ********* Test Login DDT Started *********
+06/23/2025  04:58:15 PM: INFO: ********* Launching Application *********
+06/23/2025  04:58:15 PM: INFO: ********* Launching Application *********
+06/23/2025  04:58:15 PM: INFO: ********* Launching Application *********
+06/23/2025  04:58:15 PM: INFO: ********* Launching Application *********
+06/23/2025  04:58:44 PM: INFO: ********* Test Login DDT Finished *********
+06/23/2025  04:58:44 PM: INFO: ********* Test Login DDT Finished *********
+06/23/2025  04:58:44 PM: INFO: ********* Test Login DDT Finished *********
+06/23/2025  04:58:44 PM: INFO: ********* Test Login DDT Finished *********
+06/23/2025  04:58:54 PM: INFO: *** End-to-End Test Execution Started ***
+06/23/2025  04:58:54 PM: INFO: *** End-to-End Test Execution Started ***
+06/23/2025  04:58:54 PM: INFO: *** End-to-End Test Execution Started ***
+06/23/2025  04:58:54 PM: INFO: *** End-to-End Test Execution Started ***
+06/23/2025  04:58:55 PM: INFO: *** Starting Registration ***
+06/23/2025  04:58:55 PM: INFO: *** Starting Registration ***
+06/23/2025  04:58:55 PM: INFO: *** Starting Registration ***
+06/23/2025  04:58:55 PM: INFO: *** Starting Registration ***
+06/23/2025  04:58:57 PM: INFO: Registration successful with email: zobie@gmail.com
+06/23/2025  04:58:57 PM: INFO: Registration successful with email: zobie@gmail.com
+06/23/2025  04:58:57 PM: INFO: Registration successful with email: zobie@gmail.com
+06/23/2025  04:58:57 PM: INFO: Registration successful with email: zobie@gmail.com
+06/23/2025  04:58:57 PM: INFO: *** Logging out ***
+06/23/2025  04:58:57 PM: INFO: *** Logging out ***
+06/23/2025  04:58:57 PM: INFO: *** Logging out ***
+06/23/2025  04:58:57 PM: INFO: *** Logging out ***
+06/23/2025  04:58:58 PM: INFO: Logout successful and home page visible
+06/23/2025  04:58:58 PM: INFO: Logout successful and home page visible
+06/23/2025  04:58:58 PM: INFO: Logout successful and home page visible
+06/23/2025  04:58:58 PM: INFO: Logout successful and home page visible
+06/23/2025  04:58:58 PM: INFO: *** Logging in with registered email ***
+06/23/2025  04:58:58 PM: INFO: *** Logging in with registered email ***
+06/23/2025  04:58:58 PM: INFO: *** Logging in with registered email ***
+06/23/2025  04:58:58 PM: INFO: *** Logging in with registered email ***
+06/23/2025  04:59:00 PM: INFO: Login successful
+06/23/2025  04:59:00 PM: INFO: Login successful
+06/23/2025  04:59:00 PM: INFO: Login successful
+06/23/2025  04:59:00 PM: INFO: Login successful
+06/23/2025  04:59:00 PM: INFO: *** Searching product and adding to cart ***
+06/23/2025  04:59:00 PM: INFO: *** Searching product and adding to cart ***
+06/23/2025  04:59:00 PM: INFO: *** Searching product and adding to cart ***
+06/23/2025  04:59:00 PM: INFO: *** Searching product and adding to cart ***
+06/23/2025  04:59:06 PM: INFO: Product added to cart successfully
+06/23/2025  04:59:06 PM: INFO: Product added to cart successfully
+06/23/2025  04:59:06 PM: INFO: Product added to cart successfully
+06/23/2025  04:59:06 PM: INFO: Product added to cart successfully
+06/23/2025  04:59:06 PM: INFO: *** Verifying Shopping Cart ***
+06/23/2025  04:59:06 PM: INFO: *** Verifying Shopping Cart ***
+06/23/2025  04:59:06 PM: INFO: *** Verifying Shopping Cart ***
+06/23/2025  04:59:06 PM: INFO: *** Verifying Shopping Cart ***
+06/23/2025  04:59:07 PM: INFO: Shopping cart verified
+06/23/2025  04:59:07 PM: INFO: Shopping cart verified
+06/23/2025  04:59:07 PM: INFO: Shopping cart verified
+06/23/2025  04:59:07 PM: INFO: Shopping cart verified
+06/23/2025  04:59:07 PM: INFO: *** End-to-End Test Completed Successfully ***
+06/23/2025  04:59:07 PM: INFO: *** End-to-End Test Completed Successfully ***
+06/23/2025  04:59:07 PM: INFO: *** End-to-End Test Completed Successfully ***
+06/23/2025  04:59:07 PM: INFO: *** End-to-End Test Completed Successfully ***
