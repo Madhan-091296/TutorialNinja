@@ -14,7 +14,7 @@ pipeline {
 
     // ---------- Parameters ----------
     parameters {
-        choice(name: 'BROWSER', choices: ['firefox','chrome', 'edge', description: 'Select the browser')
+        choice(name: 'BROWSER', choices: ['firefox','chrome', 'edge'], description: 'Select the browser')
         choice(name: 'MARKER', choices: ['smoke', 'regression', 'sanity'], description: 'Select test group/marker')
     }
 
