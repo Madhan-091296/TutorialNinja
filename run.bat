@@ -1,8 +1,3 @@
-@REM @REM @echo off
-@REM @REM rmdir /s /q reports\allure-results && docker-compose up -d &&
-@REM @REM pytest -s -v -m "sanity" --reruns 2 --reruns-delay 2 --alluredir=reports\allure-results -n 2 testCases\ --browser edge && allure generate reports\allure-results -o reports\allure-html --clean && allure open reports\allure-html
-
-
 @echo off
 
 :: ====================================================
@@ -25,30 +20,20 @@ echo Activating Virtual Environment...
 call venv\Scripts\activate.bat
 
 :: ====================================================
-:: Step 3: Set a custom temporary directory for pytest
-:: ====================================================
-echo Setting temporary directory for Pytest to avoid file permission errors...
-set PYTEST_TMPDIR=%cd%\pytest-tmp
-:: Create the directory if it doesn't exist
-if not exist "%PYTEST_TMPDIR%" (
-    mkdir "%PYTEST_TMPDIR%"
-)
-
-:: ====================================================
-:: Step 4: Restart Docker containers (Selenium Grid, etc.)
+:: Step 3: Restart Docker containers (Selenium Grid, etc.)
 :: ====================================================
 echo Restarting Docker containers...
 docker-compose down
 docker-compose up -d
 
 :: ====================================================
-:: Step 5: Install required Python packages
+:: Step 4: Install required Python packages
 :: ====================================================
 echo Installing/updating required packages...
 pip install -r requirements.txt
 
 :: ====================================================
-:: Step 6: Clean up previous test reports (Allure + HTML)
+:: Step 5: Clean up previous test reports (Allure + HTML)
 :: ====================================================
 echo Cleaning previous test reports...
 rmdir /s /q %ALLURE_RESULTS% || exit 0
@@ -56,7 +41,7 @@ rmdir /s /q %ALLURE_HTML% || exit 0
 del %PYTEST_HTML% || exit 0
 
 :: ====================================================
-:: Step 7: Run Pytest tests with marker, reruns, parallel, HTML + Allure reporting
+:: Step 6: Run Pytest tests with marker, reruns, parallel, HTML + Allure reporting
 :: ====================================================
 echo Running tests...
 pytest -s -v ^
@@ -66,13 +51,13 @@ pytest -s -v ^
  testCases/
 
 :: ====================================================
-:: Step 8: Shut down Docker containers
+:: Step 7: Shut down Docker containers
 :: ====================================================
 echo Shutting down Docker containers...
 docker-compose down
 
 :: ====================================================
-:: Step 9: Generate and open Allure report
+:: Step 8: Generate and open Allure report
 :: ====================================================
 echo Generating and opening Allure report...
 allure generate %ALLURE_RESULTS% -o %ALLURE_HTML% --clean && allure open %ALLURE_HTML%
