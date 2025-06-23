@@ -3,7 +3,7 @@ import os
 config = configparser.RawConfigParser()
 
 # config.read(os.path.abspath(os.getcwd())+'\\configurations\\config.ini')
-config.read(os.path.join(os.getcwd(), 'configurations', 'config.ini'))
+config.read(os.path.join(os.path.abspath(os.getcwd()), 'configurations', 'config.ini'))
 
 class ReadConfig():
   @staticmethod
