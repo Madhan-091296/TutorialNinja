@@ -73,7 +73,7 @@ pipeline {
                 script {
                     catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                         def command = """
-                            call venv\\Scripts\\activate.bat && pytest -s -v ${params.MARKER} ^
+                            call venv\\Scripts\\activate.bat && pytest -s -v -m "${params.MARKER}" ^
                             --reruns=2 --reruns-delay=2 ^
                             --alluredir=%ALLURE_RESULTS% ^
                             --html=%PYTEST_HTML% --self-contained-html ^
