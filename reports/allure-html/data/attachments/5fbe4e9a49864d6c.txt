@@ -1,0 +1,6 @@
+[32mINFO    [0m utilities.customLogger:test_001_AccountRegistration.py:18 ********* Test Account Registration Started *********
+[32mINFO    [0m utilities.customLogger:test_001_AccountRegistration.py:21 ********* Launching Application *********
+[32mINFO    [0m utilities.customLogger:test_001_AccountRegistration.py:25 ********* Clicking on My Account --> Register *********
+[32mINFO    [0m utilities.customLogger:test_001_AccountRegistration.py:29 ********* Adding Customer Details *********
+[32mINFO    [0m utilities.customLogger:test_001_AccountRegistration.py:43 ********* Account Registration is Passed *********
+[32mINFO    [0m utilities.customLogger:test_001_AccountRegistration.py:49 ********* Test Account Registration Finished *********

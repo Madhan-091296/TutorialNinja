@@ -1,0 +1,4 @@
+[32mINFO    [0m utilities.customLogger:test_002_login.py:20 ********* Test Login Started *********
+[32mINFO    [0m utilities.customLogger:test_002_login.py:23 ********* Launching Application *********
+[32mINFO    [0m utilities.customLogger:test_002_login.py:27 ********* Clicking on My Account --> Login *********
+[32mINFO    [0m utilities.customLogger:test_002_login.py:40 ********* Test Login Finished *********

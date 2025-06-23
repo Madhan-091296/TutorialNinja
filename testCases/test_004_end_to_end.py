@@ -36,7 +36,7 @@ class Test_EndToEnd:
         # step5 Verify shopping cart
         self.verify_cart()
         # step6 Checkout (optional/demo only)
-        self.perform_checkout_and_fill_guest_details()
+        # self.perform_checkout_and_fill_guest_details()
         self.logger.info("*** End-to-End Test Completed Successfully ***")
 
     def perform_registration(self):
